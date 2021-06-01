@@ -39,7 +39,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
     body: Form(
       key: _formKey,
       child: NoteForm(
-        favourite: favourites,
+        favourite: favourite,
         number: number,
         title: title,
         content: content,
