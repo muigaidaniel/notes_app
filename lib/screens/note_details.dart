@@ -23,15 +23,12 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
   @override
   void initState() {
     super.initState();
-
     refreshNote();
   }
 
   Future refreshNote() async {
     setState(() => isLoading = true);
-
     this.note = await Notes.instance.read(widget.noteId);
-
     setState(() => isLoading = false);
   }
 
@@ -48,17 +45,22 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
         padding: EdgeInsets.symmetric(vertical: 8),
         children: [
           Text(
-            note.title,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
+            DateFormat('d MMM y \nkk:mm').format(note.created),
+            style: TextStyle(color: Colors.white38),
           ),
           SizedBox(height: 8),
-          Text(
-            DateFormat.yMMMd().format(note.created),
-            style: TextStyle(color: Colors.white38),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                note.title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 8),
           Text(
@@ -74,11 +76,9 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
       icon: Icon(Icons.edit_outlined),
       onPressed: () async {
         if (isLoading) return;
-
         await Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => AddEditNotePage(note: note),
         ));
-
         refreshNote();
       });
 
@@ -86,7 +86,6 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
     icon: Icon(Icons.delete),
     onPressed: () async {
       await Notes.instance.delete(widget.noteId);
-
       Navigator.of(context).pop();
     },
   );
