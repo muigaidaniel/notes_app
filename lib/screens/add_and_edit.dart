@@ -33,25 +33,25 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      actions: [buildButton()],
-    ),
-    body: Form(
-      key: _formKey,
-      child: NoteForm(
-        favourite: favourite,
-        number: number,
-        title: title,
-        content: content,
-        onChangedFavourite: (favourite) =>
-            setState(() => this.favourite = favourite),
-        onChangedNumber: (number) => setState(() => this.number = number),
-        onChangedTitle: (title) => setState(() => this.title = title),
-        onChangedContent: (content) =>
-            setState(() => this.content = content),
-      ),
-    ),
-  );
+        appBar: AppBar(
+          actions: [buildButton()],
+        ),
+        body: Form(
+          key: _formKey,
+          child: NoteForm(
+            favourite: favourite,
+            number: number,
+            title: title,
+            content: content,
+            onChangedFavourite: (favourite) =>
+                setState(() => this.favourite = favourite),
+            onChangedNumber: (number) => setState(() => this.number = number),
+            onChangedTitle: (title) => setState(() => this.title = title),
+            onChangedContent: (content) =>
+                setState(() => this.content = content),
+          ),
+        ),
+      );
 
   Widget buildButton() {
     final isFormValid = title.isNotEmpty && content.isNotEmpty;
@@ -71,17 +71,14 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
 
   void addOrUpdateNote() async {
     final isValid = _formKey.currentState!.validate();
-
     if (isValid) {
       final isUpdating = widget.note != null;
-
       if (isUpdating) {
-        await updateNote();
+        await addNote();
       } else {
         await addNote();
       }
-
-      Navigator.of(context).pop();
+      Navigator.of(context).popUntil((route) => route.isFirst);
     }
   }
 
@@ -92,7 +89,6 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
       title: title,
       content: content,
     );
-
     await Notes.instance.update(note);
   }
 

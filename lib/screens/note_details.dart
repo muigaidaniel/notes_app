@@ -34,43 +34,43 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      actions: [editButton(), deleteButton()],
-    ),
-    body: isLoading
-        ? Center(child: CircularProgressIndicator())
-        : Padding(
-      padding: EdgeInsets.all(12),
-      child: ListView(
-        padding: EdgeInsets.symmetric(vertical: 8),
-        children: [
-          Text(
-            DateFormat('d MMM y \nkk:mm').format(note.created),
-            style: TextStyle(color: Colors.white38),
-          ),
-          SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                note.title,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
+        appBar: AppBar(
+          actions: [editButton(), deleteButton()],
+        ),
+        body: isLoading
+            ? Center(child: CircularProgressIndicator())
+            : Padding(
+                padding: EdgeInsets.all(12),
+                child: ListView(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  children: [
+                    Text(
+                      DateFormat('d MMM y \nkk:mm').format(note.created),
+                      style: TextStyle(color: Colors.white38),
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          note.title,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      note.content,
+                      style: TextStyle(color: Colors.white70, fontSize: 18),
+                    )
+                  ],
                 ),
               ),
-            ],
-          ),
-          SizedBox(height: 8),
-          Text(
-            note.content,
-            style: TextStyle(color: Colors.white70, fontSize: 18),
-          )
-        ],
-      ),
-    ),
-  );
+      );
 
   Widget editButton() => IconButton(
       icon: Icon(Icons.edit_outlined),
@@ -80,13 +80,14 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
           builder: (context) => AddEditNotePage(note: note),
         ));
         refreshNote();
+        await Notes.instance.delete(widget.noteId);
       });
 
   Widget deleteButton() => IconButton(
-    icon: Icon(Icons.delete),
-    onPressed: () async {
-      await Notes.instance.delete(widget.noteId);
-      Navigator.of(context).pop();
-    },
-  );
+        icon: Icon(Icons.delete),
+        onPressed: () async {
+          await Notes.instance.delete(widget.noteId);
+          Navigator.of(context).pop();
+        },
+      );
 }
