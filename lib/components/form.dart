@@ -24,58 +24,58 @@ class NoteForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
-    child: Padding(
-      padding: EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              /*Switch(
+              Row(
+                children: [
+                  /*Switch(
                 value: favourite ?? false,
                 onChanged: onChangedFavourite,
               ),*/
+                ],
+              ),
+              buildTitle(),
+              SizedBox(height: 8),
+              buildDescription(),
+              SizedBox(height: 16),
             ],
           ),
-          buildTitle(),
-          SizedBox(height: 8),
-          buildDescription(),
-          SizedBox(height: 16),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   Widget buildTitle() => TextFormField(
-    maxLines: 1,
-    initialValue: title,
-    style: TextStyle(
-      color: Colors.white70,
-      fontWeight: FontWeight.bold,
-      fontSize: 24,
-    ),
-    decoration: InputDecoration(
-      border: InputBorder.none,
-      hintText: 'Title',
-      hintStyle: TextStyle(color: Colors.white70),
-    ),
-    validator: (title) =>
-    title != null && title.isEmpty ? 'The title cannot be empty' : null,
-    onChanged: onChangedTitle,
-  );
+        maxLines: 1,
+        initialValue: title,
+        style: TextStyle(
+          color: Colors.white70,
+          fontWeight: FontWeight.bold,
+          fontSize: 24,
+        ),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: 'Title',
+          hintStyle: TextStyle(color: Colors.white70),
+        ),
+        validator: (title) =>
+            title != null && title.isEmpty ? 'The title cannot be empty' : null,
+        onChanged: onChangedTitle,
+      );
 
   Widget buildDescription() => TextFormField(
-    maxLines: 5,
-    initialValue: content,
-    style: TextStyle(color: Colors.white60, fontSize: 18),
-    decoration: InputDecoration(
-      border: InputBorder.none,
-      hintText: 'Type something...',
-      hintStyle: TextStyle(color: Colors.white60),
-    ),
-    validator: (title) => title != null && title.isEmpty
-        ? 'The description cannot be empty'
-        : null,
-    onChanged: onChangedContent,
-  );
+        maxLines: 5,
+        initialValue: content,
+        style: TextStyle(color: Colors.white60, fontSize: 18),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: 'Type something...',
+          hintStyle: TextStyle(color: Colors.white60),
+        ),
+        validator: (title) => title != null && title.isEmpty
+            ? 'The description cannot be empty'
+            : null,
+        onChanged: onChangedContent,
+      );
 }

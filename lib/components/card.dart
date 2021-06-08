@@ -12,7 +12,11 @@ final _lightColors = [
 ];
 
 class NoteCard extends StatelessWidget {
-  NoteCard({Key? key, required this.note, required this.index,}) : super(key: key);
+  NoteCard({
+    Key? key,
+    required this.note,
+    required this.index,
+  }) : super(key: key);
 
   final Note note;
   final int index;
@@ -21,7 +25,7 @@ class NoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     /// Pick colors from the accent colors based on index
     final color = _lightColors[index % _lightColors.length];
-    final created= DateFormat('d MMM y  kk:mm').format(note.created);
+    final created = DateFormat('d MMM y  kk:mm').format(note.created);
     final minHeight = getMinHeight(index);
 
     return Card(
@@ -34,18 +38,13 @@ class NoteCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  note.title,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+            Text(
+              note.title,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             Text(
               created,

@@ -34,14 +34,14 @@ class _HomescreenState extends State<Homescreen> {
             'Notes',
             style: TextStyle(fontSize: 24),
           ),
-          actions: [
+          /*actions: [
             IconButton(
                 icon: Icon(Icons.search),
                 onPressed: () {
                   showSearch(context: context, delegate: Search());
                 }),
             SizedBox(width: 12)
-          ],
+          ],*/
         ),
         body: Center(
           child: isLoading

@@ -95,7 +95,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
   Future addNote() async {
     final note = Note(
       title: title,
-      favourite: true,
+      favourite: favourite,
       number: number,
       content: content,
       created: DateTime.now(),
