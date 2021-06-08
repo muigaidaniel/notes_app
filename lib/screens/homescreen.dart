@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -58,18 +59,23 @@ class _HomescreenState extends State<Homescreen> {
                       crossAxisSpacing: 4,
                       itemBuilder: (context, index) {
                         final note = notes[index];
-
-                        return GestureDetector(
-                          onTap: () async {
-                            await Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  NoteDetailPage(noteId: note.id!),
-                            ));
-                            refreshNotes();
-                          },
-                          child: FlipCard(
-                            back: BackNoteCard(note: note, index: index),
-                            front: NoteCard(note: note, index: index),
+                        return OpenContainer(
+                          closedColor:
+                              Theme.of(context).scaffoldBackgroundColor,
+                          openColor: Theme.of(context).scaffoldBackgroundColor,
+                          middleColor:
+                              Theme.of(context).scaffoldBackgroundColor,
+                          transitionDuration: Duration(seconds: 1),
+                          openBuilder: (context, _) =>
+                              NoteDetailPage(noteId: note.id!),
+                          closedBuilder:
+                              (context, VoidCallback openContainer) =>
+                                  GestureDetector(
+                            onTap: openContainer,
+                            child: FlipCard(
+                              back: BackNoteCard(note: note, index: index),
+                              front: NoteCard(note: note, index: index),
+                            ),
                           ),
                         );
                       },
