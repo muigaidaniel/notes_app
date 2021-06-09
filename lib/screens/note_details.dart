@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:notes/database/note.dart';
 import 'package:notes/database/notes.dart';
@@ -38,7 +39,10 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
           actions: [editButton(), deleteButton()],
         ),
         body: isLoading
-            ? Center(child: CircularProgressIndicator())
+            ? Center(
+                child: SpinKitRotatingCircle(
+                color: Colors.deepOrange,
+              ))
             : Padding(
                 padding: EdgeInsets.all(12),
                 child: ListView(

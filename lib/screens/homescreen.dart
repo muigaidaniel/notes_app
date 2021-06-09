@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:notes/components/backcard.dart';
 import 'package:notes/components/card.dart';
@@ -44,7 +45,9 @@ class _HomescreenState extends State<Homescreen> {
         ),
         body: Center(
           child: isLoading
-              ? CircularProgressIndicator()
+              ? SpinKitRotatingCircle(
+                  color: Colors.deepOrange,
+                )
               : notes.isEmpty
                   ? Text(
                       'No Notes',
@@ -59,7 +62,16 @@ class _HomescreenState extends State<Homescreen> {
                       crossAxisSpacing: 4,
                       itemBuilder: (context, index) {
                         final note = notes[index];
-                        return OpenContainer(
+                        return GestureDetector(
+                          onTap: () async {
+                            await Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  NoteDetailPage(noteId: note.id!),
+                            ));
+
+                            refreshNotes();
+                          },
+                          /*OpenContainer(
                           closedColor:
                               Theme.of(context).scaffoldBackgroundColor,
                           openColor: Theme.of(context).scaffoldBackgroundColor,
@@ -71,11 +83,13 @@ class _HomescreenState extends State<Homescreen> {
                           closedBuilder:
                               (context, VoidCallback openContainer) =>
                                   GestureDetector(
-                            onTap: openContainer,
-                            child: FlipCard(
-                              back: BackNoteCard(note: note, index: index),
-                              front: NoteCard(note: note, index: index),
-                            ),
+                            onTap: () {
+                              openContainer();
+                              refreshNotes();
+                            },*/
+                          child: FlipCard(
+                            back: BackNoteCard(note: note, index: index),
+                            front: NoteCard(note: note, index: index),
                           ),
                         );
                       },
