@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notes/screens/homescreen.dart';
 import 'package:notes/screens/splashscreen.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,7 +21,13 @@ class MyApp extends StatelessWidget {
         ),
         home: Splashscreen(),
         routes: {
-          'homescreen': (context) => Homescreen(),
+          'homescreen': (context) => ShowCaseWidget(
+              autoPlay: true,
+              autoPlayLockEnable: true,
+              autoPlayDelay: Duration(seconds: 3),
+              builder: Builder(
+                builder: (_) => Homescreen(),
+              )),
         },
       );
 }

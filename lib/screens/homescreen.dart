@@ -9,8 +9,12 @@ import 'package:notes/database/note.dart';
 import 'package:notes/database/notes.dart';
 import 'package:notes/screens/add_and_edit.dart';
 import 'package:notes/screens/note_details.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 class Homescreen extends StatefulWidget {
+  final Note? note;
+
+  const Homescreen({Key? key, this.note}) : super(key: key);
   @override
   _HomescreenState createState() => _HomescreenState();
 }
@@ -22,7 +26,20 @@ class _HomescreenState extends State<Homescreen> {
   @override
   void initState() {
     super.initState();
+    //firstNote();
     refreshNotes();
+  }
+
+  void firstNote() {
+    final note = Note(
+      title: 'Example',
+      favourite: false,
+      number: 1,
+      content: 'This is an example of a note',
+      created: DateTime.now(),
+    );
+
+    Notes.instance.create(note);
   }
 
   Future refreshNotes() async {
@@ -38,10 +55,11 @@ class _HomescreenState extends State<Homescreen> {
             'Notes',
             style: TextStyle(fontSize: 24),
           ),
-          actions: [
+          centerTitle: true,
+          /*actions: [
             IconButton(icon: Icon(Icons.search), onPressed: () {}),
             SizedBox(width: 12)
-          ],
+          ],*/
         ),
         body: Center(
           child: isLoading
@@ -49,9 +67,32 @@ class _HomescreenState extends State<Homescreen> {
                   color: Colors.deepOrange,
                 )
               : notes.isEmpty
-                  ? Text(
-                      'No Notes',
-                      style: TextStyle(color: Colors.white, fontSize: 24),
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'No notes here',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 20),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.black87,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: Text(
+                              'Tip:Long press on a note to see the magic!',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
+                            ),
+                          ),
+                        ),
+                      ],
                     )
                   : StaggeredGridView.countBuilder(
                       padding: EdgeInsets.all(8),
@@ -68,25 +109,8 @@ class _HomescreenState extends State<Homescreen> {
                               builder: (context) =>
                                   NoteDetailPage(noteId: note.id!),
                             ));
-
                             refreshNotes();
                           },
-                          /*OpenContainer(
-                          closedColor:
-                              Theme.of(context).scaffoldBackgroundColor,
-                          openColor: Theme.of(context).scaffoldBackgroundColor,
-                          middleColor:
-                              Theme.of(context).scaffoldBackgroundColor,
-                          transitionDuration: Duration(seconds: 1),
-                          openBuilder: (context, _) =>
-                              NoteDetailPage(noteId: note.id!),
-                          closedBuilder:
-                              (context, VoidCallback openContainer) =>
-                                  GestureDetector(
-                            onTap: () {
-                              openContainer();
-                              refreshNotes();
-                            },*/
                           child: FlipCard(
                             back: BackNoteCard(note: note, index: index),
                             front: NoteCard(note: note, index: index),
